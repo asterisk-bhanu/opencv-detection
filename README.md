@@ -1,5 +1,7 @@
 # OpenCV Detection
 
+A bunch of programs using OpenCV to fulfill various tasks.
+
 [colour_det](https://github.com/asterisk-bhanu/opencv-detection/blob/master/colour_det.py): Asks the user for a colour and the filters the video feed to detect objects of only that colour.
 The colour can be provided while executing the file in command line itself. If not provided, the program will explicitly ask for a colour to be input.
 It displays 3 windows: 
