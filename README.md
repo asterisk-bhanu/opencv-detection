@@ -23,4 +23,6 @@ It displays 3 windows:
 * Frame Delta: Comparison between first and current frame.
 * Threshold Frame: Shows comparison in binary, diluted.
 
+[functions](https://github.com/asterisk-bhanu/opencv-detection/blob/master/functions.py): Contains definitions of functions used in aforementioned programs.
+
 Performance of any program is subjective to lighting conditions and camera quality.
