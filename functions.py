@@ -119,17 +119,20 @@ out = cv2.VideoWriter('face.mp4',fourcc, 20.0, (640,480))
 
 #Function to detect facial features.
 def face_det(gray, frame):
-    det = False
+    det = 0
+    face = False
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     for (x,y,w,h) in faces:
-        det = True
+        face = True
         cv2.rectangle(frame,(x,y), (x+w, y+h), (255,0,0), 2)
         roi_gray = gray[y:y+h, x:x+w]
         roi_color = frame[y:y+h, x:x+w]
         eyes = eye_cascade.detectMultiScale(roi_gray, 1.1, 3)
         for (ex,ey,ew,eh) in eyes:
+            ++det
             cv2.rectangle(roi_color,(ex,ey), (ex+ew, ey+eh), (0,0,255), 2)
         smile = smile_cascade.detectMultiScale(roi_gray, 1.2, 22)
         for (sx,sy,sw,sh) in smile:
+            ++det            
             cv2.rectangle(roi_color,(sx,sy), (sx+sw, sy+sh), (0,255,0), 2)        
-    return frame, det
+    return frame, det, face

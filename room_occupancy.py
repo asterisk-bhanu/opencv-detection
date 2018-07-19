@@ -60,9 +60,10 @@ while True:
         (x, y, w, h) = cv2.boundingRect(c)
         cv2.rectangle(frame, (x,y), (x+w,y+h), (0, 255, 0), 2)
 
-    img, det = face_det(gray, frame)
-    if det:
-        text="Occupied"
+    img, det, face = face_det(gray, frame)
+    if face == True:
+        text="Occupied"    
+    if det>=2:
         cv2.imwrite("face.jpg", img)
         #Flip frame.
         flip = cv2.flip(img,0)
