@@ -24,6 +24,7 @@ firstFrame = None
 #Start video stream:
 while True:
     ret, frame = cap.read()
+    raw = frame
     frame = frame if args.get("video", None) is None else frame[1]
     text = "Unoccupied"
 	
@@ -58,15 +59,25 @@ while True:
         #Draw box.
         (x, y, w, h) = cv2.boundingRect(c)
         cv2.rectangle(frame, (x,y), (x+w,y+h), (0, 255, 0), 2)
-        text = "Occupied"
+
+    img, det = face_det(gray, frame)
+    if det:
+        text="Occupied"
+        cv2.imwrite("face.jpg", img)
+        #Flip frame.
+        flip = cv2.flip(img,0)
+        #Write the flipped frame.
+        out.write(flip)
 
     #Draw timestamp and text.
-    draw_time(frame, text)
- 
+    draw_text(frame, text)
+    draw_time(raw)
+
     #Show the frame and record if the user presses a key
-    cv2.imshow("Security Feed", frame)
+    cv2.imshow("Security Feed", raw)
     cv2.imshow("Threshold Frame", thresh)
     cv2.imshow("Frame Delta", frameDelta)
+    cv2.imshow("Facial Capture", img)
     key = cv2.waitKey(1) & 0xFF
  
     #Break loop at 'q'.

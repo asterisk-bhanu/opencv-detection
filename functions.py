@@ -102,6 +102,34 @@ def draw_cont(image,detection=False):
 
 
 #Draw timestamp and text on frame.
-def draw_time(frame, text=""):
+def draw_text(frame, text=""):
 	cv2.putText(frame, "Room Status: {}".format(text), (10, 20),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+
+def draw_time(frame):
 	cv2.putText(frame, datetime.datetime.now().strftime("%A %d %B %Y %I:%M:%S%p"),(10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
+
+#Init cascades:
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
+smile_cascade = cv2.CascadeClassifier('haarcascade_smile.xml')
+
+#Define the codec and create VideoWriter object.
+fourcc = cv2.VideoWriter_fourcc(*'MP4V')
+out = cv2.VideoWriter('face.mp4',fourcc, 20.0, (640,480))
+
+#Function to detect facial features.
+def face_det(gray, frame):
+    det = False
+    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+    for (x,y,w,h) in faces:
+        det = True
+        cv2.rectangle(frame,(x,y), (x+w, y+h), (255,0,0), 2)
+        roi_gray = gray[y:y+h, x:x+w]
+        roi_color = frame[y:y+h, x:x+w]
+        eyes = eye_cascade.detectMultiScale(roi_gray, 1.1, 3)
+        for (ex,ey,ew,eh) in eyes:
+            cv2.rectangle(roi_color,(ex,ey), (ex+ew, ey+eh), (0,0,255), 2)
+        smile = smile_cascade.detectMultiScale(roi_gray, 1.2, 22)
+        for (sx,sy,sw,sh) in smile:
+            cv2.rectangle(roi_color,(sx,sy), (sx+sw, sy+sh), (0,255,0), 2)        
+    return frame, det
