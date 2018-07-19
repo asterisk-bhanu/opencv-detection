@@ -19,11 +19,11 @@ Only frontal_face, smile and eyes are being marked in this program.
 Official Paper: https://www.cs.cmu.edu/~efros/courses/LBMV07/Papers/viola-cvpr-01.pdf
 
 [room_occupancy](https://github.com/asterisk-bhanu/opencv-detection/blob/master/room_occupancy.py): Determines occupancy of a room.
-Compares the first frame captured with subsequent frames from a camera feed. 
-It displays 3 windows:
-* Security Feed: Live camera feed.
-* Frame Delta: Comparison between first and current frame.
-* Threshold Frame: Shows comparison in binary, diluted.
+Compares the first frame captured with subsequent frames from a camera feed. Saves the last frame as an image and frames detected as a video file. It displays 4 windows:
+*Facial Capture: Live face detection.
+*Security Feed: Live camera feed.
+*Frame Delta: Comparison between first and current frame.
+*Threshold Frame: Shows comparison in binary, diluted.
 
 [functions](https://github.com/asterisk-bhanu/opencv-detection/blob/master/functions.py): Contains definitions of functions used in aforementioned programs.
 
